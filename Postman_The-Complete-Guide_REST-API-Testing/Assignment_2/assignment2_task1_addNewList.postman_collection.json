@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "3046fbcb-7f61-449a-a335-f3acf94d1dd6",
+		"name": "assignment2_task1_addNewList",
+		"description": "Using trello's online API documentation (https://developer.atlassian.com/cloud/trello/rest/) build another request which creates a new list called TODO inside your already created board.\r\n\r\nWrite tests to check that the request performed as expected. As a minimum, please test the following:\r\n\r\n- status is 200\r\n- the name of the list is TODO\r\n- should not be closed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add TODO list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0ba003b-b711-46d1-9c3a-eca04b73f87e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"The name of the list is TODO\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"TODO\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Should not be closed\", function () {\r",
+							"    pm.expect(jsonData.closed).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/lists?key={{appKey}}&token={{authToken}}&name=TODO&idBoard={{testBoardId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{appKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{authToken}}"
+						},
+						{
+							"key": "name",
+							"value": "TODO"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{testBoardId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
